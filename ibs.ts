@@ -13,7 +13,7 @@ const BBS_PORT = 8000;
 async function GEN_BBS_MSG(
   name: string,
   id: string,
-  tripcode: string | null,
+  tripcode: string|null,
   message: string,
 ) {
   const d = new Date();
@@ -124,6 +124,11 @@ board.post("/", async function (ctx) {
     return;
   }
 
+  if (formData.name.length < 1) {
+    genErr(ctx, "Your name isn't long enough.");
+    return;
+  }
+    
   if (formData.name.length > 12) {
     genErr(ctx, "Your name is too long.");
     return;
@@ -133,10 +138,10 @@ board.post("/", async function (ctx) {
 
   const initialThread = (
     `${formData.title}${await GEN_BBS_MSG(
-      formData.name ??= "Unknown",
+      formData.name ?? "Dumb Coward",
       id,
-      formData.trip ??= null,
-      split(formData.msg),
+      formData.trip ?? null,
+      split(formData.msg, 56),
     )}\nREPLIES\n========================================================\n`
   );
 
@@ -168,7 +173,7 @@ board.post("/:id", async function (ctx) {
   formData = formData.fields;
     
   if (formData.name.length < 1) {
-    genErr(ctx, "Your message isn't long enough");
+    genErr(ctx, "Your name isn't long enough");
     return;
   }
 
@@ -189,10 +194,10 @@ board.post("/:id", async function (ctx) {
   const id = crypto.randomUUID().split("-")[4];
 
   const msg = await GEN_BBS_MSG(
-    formData.name ??= "Unknown",
+    formData.name,
     id,
-    formData.trip ??= null,
-    split(formData.msg),
+    formData.trip ?? null,
+    split(formData.msg, 56),
   );
 
   file += msg;
