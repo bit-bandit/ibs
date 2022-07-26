@@ -10,8 +10,8 @@ old days without having to leave the comfort of their internet browser.
 STARTING THE SOFTWARE:
 
 Once you've downloaded the source code (And installed DENO too, if your dumb ass
-didn't do that already!) run 'deno task run-ibs' in yer terminal, and you
-should be good to go.
+didn't do that already!) run 'deno run --allow-net --allow-read --allow-write ibs.ts' 
+in yer terminal, and you should be good to go.
 
 ---------------------------------------------------------------------------------
 HOW TO USE THIS:
